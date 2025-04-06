@@ -1,0 +1,25 @@
+{
+    "name": "cssc-calender-import",
+    "version": "1.0.0",
+    "description": "A CSSC Calender Import Chrome Extension",
+    "scripts": {
+        "build": "tsc && cp src/manifest.json dist/ && cp -r src/popup/index.html src/popup/index.css src/images dist/popup/",
+        "watch": "tsc -w",
+        "dev": "webpack serve --config webpack.config.js --port 3000",
+        "package": "zip -r extension.zip dist/*"
+    },
+    "devDependencies": {
+        "@types/chrome": "^0.0.x",
+        "@types/copy-webpack-plugin": "^6.x.x",
+        "copy-webpack-plugin": "^6.x.x",
+        "eslint": "^8.x.x",
+        "eslint-config-prettier": "^9.x.x",
+        "eslint-plugin-prettier": "^5.x.x",
+        "prettier": "^3.x.x",
+        "ts-loader": "^9.x.x",
+        "typescript": "^5.x",
+        "webpack": "^5.x",
+        "webpack-cli": "^5.x",
+        "webpack-dev-server": "^4.x"
+    }
+}

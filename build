@@ -1,0 +1,23 @@
+#!/bin/bash
+
+IMAGE_NAME="cssc-calender-import"
+
+CONTAINER_NAME="cssc-calender-import-temp"
+LOCAL_NODE_MODULES="./"
+CONTAINER_NODE_MODULES="/app/node_modules"
+
+# Quietly build the Docker image
+echo "Building Docker image..."
+docker build -q -t "$IMAGE_NAME" .
+
+if [ ! -d "$LOCAL_NODE_MODULES" ]; then
+  echo "Creating local node_modules directory..."
+  rm -rf "$LOCAL_NODE_MODULES"
+  mkdir -p "$LOCAL_NODE_MODULES"
+fi
+
+docker create --name "$CONTAINER_NAME" "$IMAGE_NAME"
+docker cp "$CONTAINER_NAME:$CONTAINER_NODE_MODULES" "$LOCAL_NODE_MODULES"
+docker rm -f "$CONTAINER_NAME" > /dev/null 2>&1
+
+echo "Docker image built and node_modules synchronized."
