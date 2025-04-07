@@ -10,7 +10,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://www.homebasehub.ca/cssc/view-registration/*?view[display]=schedule*"
+                "https://www.homebasehub.ca/cssc/view-registration/*"
             ],
             "js": [
                 "content/index.js"

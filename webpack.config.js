@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 export default {
     mode: 'development',
-    devtool: 'cheap-module-source-map', // Or another option that doesn't use eval
+    devtool: 'cheap-module-source-map',
     context: path.resolve(__dirname, '.'),
     entry: {
         popup: './src/popup/index.ts',
