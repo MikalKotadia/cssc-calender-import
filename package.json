@@ -23,6 +23,7 @@
         "webpack-dev-server": "^4.x"
     },
     "dependencies": {
+        "date-fns": "^4.1.0",
         "ics": "^3.8.1"
     }
 }
