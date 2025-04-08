@@ -4,6 +4,7 @@ import * as dateFns from 'date-fns'
 type Game = {
     date: string,
     time: string,
+    title: string,
     location_name: string,
     location_url: string,
 }
@@ -36,10 +37,6 @@ function main(observer: MutationObserver) {
         const ical_file = buildICal(games);
         const download_link = URL.createObjectURL(ical_file);
         createDownloadButton(download_link);
-
-
-        // trying to assign the file URL to a window could cause cross-site
-        // issues so this is a workaround using HTML5
     }
 
     observer.observe(document.body, { childList: true, subtree: true });
@@ -53,7 +50,8 @@ function buildICal(games: Array<Game>) {
         events.push({
             start: [constructed_date.getFullYear(), constructed_date.getMonth() + 1, constructed_date.getDate(), constructed_date.getHours(), constructed_date.getMinutes()],
             duration: { hours: 1 },
-            title: game.location_name,
+            title: game.title,
+            location: game.location_name,
             url: game.location_url,
         });
     }
@@ -96,24 +94,14 @@ function parseCalendar() {
             continue;
         }
 
-        const possible_times = team_allocation_entry.getElementsByClassName('game_time');
-        if (possible_times.length !== 1) {
-            return {'error': 'incorrect number of time elements'};
-        }
+        const time = team_allocation_entry.getElementsByClassName('game_time')[0].textContent as string;
+        const title = team_allocation_entry.getElementsByClassName('match-entry')[0].textContent as string;
 
-        const time = possible_times[0].textContent as string;
-
-        const possible_locations = team_allocation_entry.getElementsByClassName('facility_details');
-        if (possible_locations.length !== 1) {
-            return {'error': 'incorrect number of location elements'};
-        }
-
-        const location_element = possible_locations[0];
+        const location_element = team_allocation_entry.getElementsByClassName('facility_details')[0];
         const location_name = location_element.textContent as string;
-
         const location_url = location_element.getElementsByTagName('a')[0].getAttribute('href') as string;
 
-        games.push({date, time, location_name, location_url});
+        games.push({date, time, title, location_name, location_url});
     }
 
     return games;
