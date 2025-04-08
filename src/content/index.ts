@@ -48,10 +48,10 @@ function main(observer: MutationObserver) {
 function buildICal(games: Array<Game>) {
     const events: Array<ics.EventAttributes> = [];
     for (const game of games) {
-        const constructed_date = dateFns.parse(`${game.date} ${game.time}`, 'MMMM d, yyyy h:mm a', new Date());
+        const constructed_date = dateFns.parse(`${game.date} ${game.time}`, 'MMMM dd, yyyy h:mm a', new Date());
 
         events.push({
-            start: [constructed_date.getFullYear(), constructed_date.getMonth(), constructed_date.getDate(), constructed_date.getHours(), constructed_date.getMinutes()],
+            start: [constructed_date.getFullYear(), constructed_date.getMonth() + 1, constructed_date.getDate(), constructed_date.getHours(), constructed_date.getMinutes()],
             duration: { hours: 1 },
             title: game.location_name,
             url: game.location_url,
